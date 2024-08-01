@@ -1,0 +1,208 @@
+﻿@model IEnumerable<web_ban_dien_thoai.Models.DanhGiaSP>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h2 style="text-align:center">Quản lý đánh giá khách hàng</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+
+    th,
+    td {
+        border: 1px solid #000; /* Border mặc định */
+        padding: 8px; /* Add padding for better appearance */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div style="display:flex;">
+    <h3>Lọc theo sản phẩm:</h3>
+    <input type="text" id="filterProductName" placeholder="Nhập tên sản phẩm...">
+    <h3 style="margin-left:5px;">Lọc đánh giá:</h3>
+    <select id="filterRating">
+        <option value="0">Tất cả</option>
+        <option value="1">1 Sao</option>
+        <option value="2">2 Sao</option>
+        <option value="3">3 Sao</option>
+        <option value="4">4 Sao</option>
+        <option value="5">5 Sao</option>
+    </select>
+    <button id="searchButton">Tìm kiếm</button>
+</div>
+<div>
+
+</div>
+<div>
+    <h1>    </h1>
+</div>
+<table class="table" id="danhGiaTable">
+    <tr style="background-color:darkorange;">
+        <th style="width:50px;">
+            Mã đánh giá
+        </th>
+        <th style="width:50px;">
+            Họ Tên Khách Hàng
+        </th>
+        <th style="width:50px;">
+            Mã sản phẩm
+        </th>
+        <th style="width:190px;">
+            Tên sản phẩm
+        </th>
+        <th style="width:90px;">
+            Ngày đăng
+        </th>
+        <th style="width:270px;">
+            Nội dung đánh giá
+        </th>
+        <th style="width:90px;">
+            Điểm
+        </th>
+
+        @*<th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDanhGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.HoTenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DienThoai.TenDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiDung)
+            </td>
+            <td>
+                @for (int i = 1; i <= item.Rate; i++)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+            </td>
+            @*<td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaDG }, new { @class = "edit-button" })
+
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.MaDG }, new { @class = "delete-button" })
+            </td>*@
+        </tr>
+    }
+
+</table>
+
+@*<script>
+        $(document).ready(function () {
+            $("#filterRating").change(function () {
+                var selectedRating = parseInt($(this).val());
+
+                $("#danhGiaTable tr:gt(0)").each(function () {
+                    var rowRating = parseInt($(this).find(".fa-star.checked").length);
+
+                    if (selectedRating === 0 || rowRating === selectedRating) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>*@
+
+@*<script>
+        $(document).ready(function () {
+            $("#filterRating").change(function () {
+                var selectedRating = parseInt($(this).val());
+                var selectedProductName = $("#filterProductName").val().toLowerCase();
+
+                $("#danhGiaTable tr:gt(0)").each(function () {
+                    var rowRating = parseInt($(this).find(".fa-star.checked").length);
+                    var rowProductName = $(this).find("td:nth-child(4)").text().toLowerCase();
+
+                    if ((selectedRating === 0 || rowRating === selectedRating) &&
+                        (selectedProductName === "" || rowProductName.includes(selectedProductName))) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>*@
+<script>
+    $(document).ready(function () {
+        function filterReviews() {
+            var selectedRating = parseInt($("#filterRating").val());
+            var selectedProductName = $("#filterProductName").val().toLowerCase();
+
+            $("#danhGiaTable tr:gt(0)").each(function () {
+                var rowRating = parseInt($(this).find(".fa-star.checked").length);
+                var rowProductName = $(this).find("td:nth-child(4)").text().toLowerCase();
+
+                if ((selectedRating === 0 || rowRating === selectedRating) &&
+                    (selectedProductName === "" || rowProductName.includes(selectedProductName))) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        $("#searchButton").click(function () {
+            filterReviews();
+        });
+
+        $("#filterRating, #filterProductName").change(function () {
+            filterReviews();
+        });
+    });
+</script>

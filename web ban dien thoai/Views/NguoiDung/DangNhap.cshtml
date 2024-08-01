@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+
+
+    /* Add this CSS to your existing stylesheet or in a <style> tag in the <head> section of your HTML */
+
+    .hang-km {
+        display: flex;
+        justify-content: center; /* Centers the "sukien" elements */
+    }
+
+    .sukien {
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 24%;
+        padding: 10px 20px;
+        background-color: snow;
+        margin: 0 5px; /* Add a small margin between the "sukien" elements */
+    }
+</style>
+<body>
+    <div style="text-decoration: none; color: black; justify-content: center; align-items: center; text-align: center;">
+        <a style="font-size: 32px;">Đăng nhập</a>
+    </div>    
+    <div class="" >
+        <h2 style="color: red;margin-left:466px">@ViewBag.ThongBao</h2>
+        <div class="" style="padding-left:614px">
+
+            @using (Html.BeginForm("DangNhap", "NguoiDung"))
+            {
+                @Html.ValidationSummary(true)
+                <div class="">
+                    <label for="dangnhap">Tên đăng nhập:</label>
+                    @Html.TextBox("TenDN", null, new
+                    {
+                        @class = "form-control",
+                        @id =
+                    "dangnhap",
+                        required = "required"
+                    })
+                </div>
+                <div class="">
+                    <label for="matkhau">Mật khẩu:</label>
+                    @Html.Password("Matkhau", null, new
+                    {
+                        @class = "form-control",
+                        @id =
+                    "matkhau",
+                        required = "required"
+                    })
+                    <br />
+                </div>
+                <a style="padding-left:32px">
+                    <button type="submit" class="btn btn-primary">ĐĂNG NHẬP</button>
+                </a>
+
+                <a style="padding-left:20px" href="~/NguoiDung/DangKy">ĐĂNG KÝ</a>
+
+            }
+        </div>
+        <div class="khoang-cach-body-footer">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+</body>
+

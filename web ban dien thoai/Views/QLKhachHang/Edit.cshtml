@@ -1,0 +1,189 @@
+﻿@model web_ban_dien_thoai.Models.KhachHang
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-horizontal {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        max-width: 300px;
+        flex: 1; /* Chia đều chiều rộng của các phần tử */
+        margin-right: 10px; /* Tạo khoảng cách giữa các phần tử */
+    }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* Loại bỏ khoảng cách ở phần tử cuối cùng */
+        }
+
+        .form-group .col-md-10 {
+            padding: 0;
+        }
+
+        .form-group .form-control {
+            width: 100%;
+            padding: 8px 0px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            .form-group .form-control:focus {
+                outline: none;
+                border-color: #5cb3fd;
+            }
+
+        .form-group .text-danger {
+            color: #d9534f;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #5cb3fd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .form-group input[type="submit"]:hover {
+                background-color: #4390d8;
+            }
+
+        .form-group a.btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+            .form-group a.btn:hover {
+                background-color: #f9f9f9;
+            }
+</style>
+<h2>Chỉnh sửa khách hàng</h2>
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div> </br>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group" style="width:300px;">
+        Mã Khách Hàng
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MaKH, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Họ Tên Khách Hàng
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HoTenKH, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HoTenKH, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Địa Chỉ Khách Hàng
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DiachiKH, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DiachiKH, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ngày Sinh
+        @Html.EditorFor(model => model.Ngaysinh, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+        @Html.ValidationMessageFor(model => model.Ngaysinh, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        Giới Tính
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Gioitinh, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Gioitinh, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Số Điện Thoại
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DienthoaiKH, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DienthoaiKH, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Email
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Tên Đăng Nhập
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenDN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TenDN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Mật Khẩu
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Matkhau, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Matkhau, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+ 

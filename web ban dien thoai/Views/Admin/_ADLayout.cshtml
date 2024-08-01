@@ -1,0 +1,108 @@
+﻿
+<!DOCTYPE html>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width " />
+    <title>ManagerWebsite</title>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <!--Get your own code at fontawesome.com-->
+
+</head>
+<style>
+    body {
+        font-size: 70%; /* Thu nhỏ cỡ chữ toàn trang */
+        width: 99%; /* Thu nhỏ chiều rộng toàn trang */
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        display: flex; /* Sử dụng Flexbox để căn chỉnh các div ngang nhau */
+    }
+
+    body ul div a {
+        text-decoration: none;
+    }
+    /* Thiết lập cơ bản cho menu dọc */
+    .vertical-menu {
+        width: 223px; /* Độ rộng của menu */
+        height: 100vh;
+        background-color: #f2f2f2; /* Màu nền của menu */
+        overflow-y: auto;
+    }
+
+        /* Các liên kết trong menu */
+        .vertical-menu a {
+            background-color: #f2f2f2; /* Màu nền */
+            color: #333; /* Màu chữ */
+            display: block;
+            padding-bottom: 5px;
+            text-decoration: none;
+        }
+
+        .vertical-menu div {
+            background-color: #f2f2f2; /* Màu nền */
+            display: block;
+            padding-bottom: 5px;
+            text-decoration: none;
+        }
+
+        /* Hiệu ứng khi rê chuột qua liên kết */
+        .vertical-menu a:hover {
+            background-color: #ddd; /* Màu nền khi rê chuột qua */
+        }
+
+        /* Hiệu ứng khi liên kết được chọn */
+        .vertical-menu a.active {
+            background-color: #007bff; /* Màu nền khi liên kết được chọn */
+            color: #fff; /* Màu chữ khi liên kết được chọn */
+        }
+</style>
+<body>
+    <div class="container">
+        <div class="left-div" style="margin-left:-30px;">
+            <ul class=" vertical-menu">
+                <div>
+                    <img src="~/images/Sony-Logo-1957.png" style="width:120px" />
+                    <h1>Văn phòng công ty </h1>
+                </div>
+                <div>
+                    <div>
+                        <a href="~/Admin/ThongTinAdmin"
+                           style="display:flex">
+                            <img style="width: 40px" src="~/images/img-GUI/info.png" />
+                            <h1 style="font-size:13px;margin:auto;margin-left:6px;">Thông tin cá nhân</h1>
+                        </a>
+                    </div>
+                    @Html.Action("QLPLPartial", "QLPhanLoai")
+                    @Html.Action("QLSPPartial", "QLSanPham")
+                    @Html.Action("QLNVPartial", "QLNhanVien")
+                    @Html.Action("QLKHPartial", "QLKhachHang")
+                    @Html.Action("QLDGPartial", "DanhGia")
+                    @Html.Action("QLHTPartial", "GopY")
+                    @Html.Action("QLDHPartial", "QLDonHang")
+                    @Html.Action("QLTKPartial", "QLCTDonHang")
+
+
+
+
+
+
+
+
+                    @Html.Action("LogOutPartial", "Admin")
+                </div>
+
+
+
+
+            </ul>
+        </div>
+        <div class="right-div" style="margin-left:10px;background-color:honeydew;" >
+            @RenderBody()
+        </div>
+    </div>
+
+</body>
+</html>

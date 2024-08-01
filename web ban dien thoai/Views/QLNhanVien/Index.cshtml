@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 10px 10px 10px 10px;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+
+    th {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    td {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+    .de-button {
+        background-color: #5397ff;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .de-button:hover {
+            background-color: #593cdb;
+        }
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+</style>
+<h2>Quản lý nhân viên</h2>
+<div>
+    <label for="search">Tìm kiếm theo tên:</label>
+    <input type="text" id="search" name="search" placeholder="Nhập tên hoặc mã số..." oninput="search()">
+</div>
+<script>
+    function removeDiacritics(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function search() {
+        var input, filter, tintuc, h4, i, txtValue;
+        input = document.getElementById('search');
+        filter = removeDiacritics(input.value.toUpperCase());
+        tintuc = document.getElementsByClassName('tintuc');
+
+        for (i = 0; i < tintuc.length; i++) {
+            h4 = tintuc[i].getElementsByClassName("tieu-de-ttt")[0];
+            txtValue = removeDiacritics(h4.textContent || h4.innerText);
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tintuc[i].style.display = "";
+            } else {
+                tintuc[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+<p>
+    @Html.ActionLink("TẠO MỚI", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<div class="hang-tin-tuc"
+     style="padding: 0 40px 0 40px; margin-top: 10px; display: flex; justify-content: space-between; justify-items: center; flex-wrap: wrap;">
+    @foreach (var item in Model)
+    {
+        <div class="tintuc"
+             style="width: 240px; padding: 10px 20px; background-color: snow; border: 1px solid #cccccc; border-radius: 4px; margin-bottom: 20px;">
+
+            <a>
+                <img src="~/images/user.png" alt="error" style="border-radius: 10px 5px 0 0;width:100%">
+            </a>
+            <div style="margin-top:10px;">
+                <h4 class="tieu-de-tt" style="font-size:14px">Mã số nhân viên: PM-@item.MaNV</h4>
+                <a class="tieu-de-ttt" style="font-size:14px">Nhân viên: @item.HoTenNV</a>
+                <div class="tieu-de-tt" style="font-size:14px;margin-bottom:10px;">Chức vụ: @item.VaiTro</div>
+
+                <div style="display: flex; justify-content: space-between; justify-items: center;max-width:155px;margin-left:5px;">
+                    <div>
+                        @Html.ActionLink("Xem", "Details", new { id = item.MaNV }, new { @class = "de-button" })
+                    </div>
+                    @*<div>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaNV }, new { @class = "edit-button" })
+                    </div>
+                    <div>
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaNV }, new { @class = "delete-button" })
+                    </div>*@
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

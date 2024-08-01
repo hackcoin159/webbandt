@@ -1,0 +1,20 @@
+﻿@using web_ban_dien_thoai.Models;
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+
+}
+@{
+    // Lấy giá trị của TongSL từ ViewBag
+    int tongSL = ViewBag.TongSL ?? 0; // Nếu ViewBag.TongSL là null thì đặt tongSL = 0
+}
+
+<a>
+   
+    <a href="@Url.Action("HienThiGioHang", "GioHang")">
+        @if (tongSL > 0)
+        {<sup style=" color: red; font-size: 1.5em; line-height: 0.5em;padding-left:-10px">&#8226;</sup>}
+        <img style="width:20px" src="~/images/img-GUI/shopping-cart.png" />
+    </a>
+</a>
+
+

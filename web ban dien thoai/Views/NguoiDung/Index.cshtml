@@ -1,0 +1,132 @@
+﻿@using web_ban_dien_thoai.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    KhachHang admin = Session["TaiKhoan"] as KhachHang;
+}
+<style>
+    body {
+        margin: 60px 10px 10px 10px;
+        font-family: Arial, sans-serif;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 80%;
+        max-width: 800px;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        width: 300px;
+    }
+
+        th:first-child, td:first-child {
+            width: 30%;
+        }
+
+    a {
+        text-decoration: none;
+        color: #337ab7;
+    }
+
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+</style>
+<body>
+    <h2 class="hoang-phuc-name-acc">THÔNG TIN CÁ NHÂN</h2>
+    <table>
+        <tr>
+            <th>Thông tin cá nhân</th>
+            <th>Chi tiết   <a style="padding-left: 390px;"> @Html.ActionLink("Chỉnh sửa", "EditInfo", new { id = admin.MaKH }, new { @class = "edit-button" })</a></th>
+        </tr>
+        <tr>
+            <td>Họ tên</td>
+            <td>@admin.HoTenKH</td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Ngày sinh</td>
+            @if (admin.Ngaysinh != null)
+            {
+                <td>@admin.Ngaysinh.Value.Day/@admin.Ngaysinh.Value.Month/@admin.Ngaysinh.Value.Year</td>
+            }
+            else
+            {
+                <td>Không có thông tin ngày sinh</td>
+            }
+        </tr>
+
+        </tr>
+        <tr>
+            <td>Giới tính</td>
+            <td>@admin.Gioitinh</td>
+        </tr>
+        <tr>
+            <td>Địa chỉ</td>
+            <td>@admin.DiachiKH</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@admin.Email</td>
+        </tr>
+        <tr>
+            <td>Điện thoại</td>
+            <td>@admin.DienthoaiKH</td>
+        </tr>
+    </table>
+</body>
+<div>
+    <table>
+        <tr>
+            <th>Thông tin tài khoản</th>
+            <th>Chi tiết</th>
+        </tr>
+        <tr>
+            <td>Tên đăng nhập</td>
+            <td>@admin.TenDN</td>
+        </tr>
+        <tr>
+            <td>Mật khẩu</td>
+            <td>
+                ********
+                <a style="padding-left: 400px;"> @Html.ActionLink("Chỉnh sửa", "EditPass", new { id = admin.MaKH }, new { @class = "edit-button" })</a>
+
+
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,355 @@
+﻿@model web_ban_dien_thoai.Models.DienThoai
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<script>
+    // Function to calculate GiaCuoi based on GiaGoc and Discount
+    function updateGiaCuoi() {
+        var giaGoc = parseInt(document.getElementById("GiaGoc").value);
+        var discount = parseInt(document.getElementById("Discount").value);
+        var giaCuoi = giaGoc * (1 - discount / 100);
+
+        // Update the value of GiaCuoi field
+        document.getElementById("GiaCuoi").value = giaCuoi.toFixed(0); // Round to 0 decimal places
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Tạo sản phẩm mới</h2>
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>
+</br>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-horizontal {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        max-width: 300px;
+        flex: 1; /* Chia đều chiều rộng của các phần tử */
+        margin-right: 10px; /* Tạo khoảng cách giữa các phần tử */
+    }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* Loại bỏ khoảng cách ở phần tử cuối cùng */
+        }
+
+        .form-group .col-md-10 {
+            padding: 0;
+        }
+
+        .form-group .form-control {
+            width: 100%;
+            padding: 8px 0px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            .form-group .form-control:focus {
+                outline: none;
+                border-color: #5cb3fd;
+            }
+
+        .form-group .text-danger {
+            color: #d9534f;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #5cb3fd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .form-group input[type="submit"]:hover {
+                background-color: #4390d8;
+            }
+
+        .form-group a.btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+            .form-group a.btn:hover {
+                background-color: #f9f9f9;
+            }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div style="display:flex;">
+        @*<div class="form-group"> đã cũ
+            Phân loại sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaPL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaPL, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label class="control-label col-md-2" for="MaPL">Phân loại sản phẩm</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MaPL, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Sony", Value = "1" },
+                    new SelectListItem { Text = "Xiaomi", Value = "2" },
+                    new SelectListItem { Text = "Google", Value = "3" },
+                    new SelectListItem { Text = "Samsung", Value = "4" },
+                    new SelectListItem { Text = "Oppo", Value = "5" }
+                }, "Chọn phân loại", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaPL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            Mã sản phẩm
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaDT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaDT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Tên sản phẩm
+            <div class="col-md-10" style="width:300px;">
+                @Html.EditorFor(model => model.TenDT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenDT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Giá gốc
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GiaGoc, new { htmlAttributes = new { @class = "form-control", id = "GiaGoc", oninput = "updateGiaCuoi()" } })
+                @Html.ValidationMessageFor(model => model.GiaGoc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Giảm giá
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", id = "Discount", oninput = "updateGiaCuoi()" } })
+                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Giá cuối
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GiaCuoi, new { htmlAttributes = new { @class = "form-control", id = "GiaCuoi", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.GiaCuoi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Kích cở màn hình
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ManHinh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ManHinh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoaiManHinh, "Độ phân giải", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LoaiManHinh, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Full HD+", Value = "Full HD+" },
+                    new SelectListItem { Text = "HD+", Value = "HD+" },
+                    new SelectListItem { Text = "2K", Value = "2K" },
+                    new SelectListItem { Text = "4K", Value = "4K" },
+                }, "Chọn độ phân giải", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LoaiManHinh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Chip xử lý
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Chip, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Chip, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Ram
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ram, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ram, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Bộ nhớ
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Rom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Rom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Cam trước
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cam, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Cam sau
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CamSau, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CamSau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Dung lượng pin
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;">
+        <div class="form-group">
+            Ngày ra mắt
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ngaycapnhat, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.Ngaycapnhat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Lượng bán
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Soluongban, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Soluongban, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Lượt xem
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.soluotxem, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.soluotxem, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chính
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet0" id="HinhChiTiet0" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chi tiết
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet1" id="HinhChiTiet1" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chi tiết
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet2" id="HinhChiTiet2" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chi tiết
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet3" id="HinhChiTiet3" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chi tiết
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet4" id="HinhChiTiet4" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        Ảnh chi tiết
+        <div class="col-md-10">
+            <input type="file" name="HinhChiTiet5" id="HinhChiTiet5" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Tạo" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+

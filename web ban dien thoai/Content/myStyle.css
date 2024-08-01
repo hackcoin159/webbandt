@@ -1,0 +1,122 @@
+﻿body {
+    font-family: "Fraunces variant0", Tofu;    
+}
+
+.container-web {
+    margin: 0px auto;
+}
+
+.header {
+}
+
+nav {
+    display: flex;
+    justify-items: center;
+}
+
+.logo {
+    list-style: none;
+    text-align: center;
+    padding: 0 0 0 0;
+}
+
+    .logo img {
+        max-width: 120px;
+        height auto;
+    }
+
+.main-menu {
+    background-color: black;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    
+}
+
+    .main-menu li {
+        position: relative;
+        z-index: 2; /*tăng lớp của li lên 2 để chồng lên các lớp còn lại*/
+    }
+        
+
+   
+
+    .main-menu li:hover > ul.sub-menu {
+        display: block;
+        background-color:dimgray;
+
+    }
+
+    .main-menu ul.sub-menu a {
+        padding: 7px 15px;
+      
+    }
+
+    .main-menu ul.sub-menu li:hover a {
+       background-color:lightgrey;
+    }
+
+    .main-menu ul.sub-menu li:last-child a {
+        border: none;
+
+    }
+
+
+    /*dropmenu của img user*/
+    .main-menu ul.sub-menu-user {
+        position: absolute;        
+        padding: 0px 0px;
+        list-style: none;
+        width: 150px;
+        display: none;
+        
+    }
+
+    .main-menu li:hover > ul.sub-menu-user {
+        display: block;
+        background-color: dimgray;
+    }
+
+    .main-menu ul.sub-menu-user a {
+        padding: 7px 15px;
+        
+    }
+
+    .main-menu ul.sub-menu-user li:hover a {
+        background-color: lightgrey;
+    }
+
+    .main-menu ul.sub-menu-user li:last-child a {
+        border: none;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*footer*/
+.start-footer {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    border-top: 0.09px solid #767474;
+}
+.start-footer a {
+        padding: 0 15px;
+}
+
+
+
+    .end-footer a {
+        color: white;
+        font-size: 10px;
+        text-decoration: none;
+    }

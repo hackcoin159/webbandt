@@ -1,0 +1,110 @@
+﻿@model web_ban_dien_thoai.Models.DienThoai
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        border: 1px solid #d9534f;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .panel-heading {
+        color: #fff;
+        background-color: #d9534f;
+        padding: 10px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .panel-title {
+        margin: 0;
+    }
+
+    .panel-body {
+        padding: 20px;
+    }
+
+    .dl-horizontal dt {
+        width: 120px;
+        font-weight: bold;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 130px;
+    }
+
+    input[type="submit"] {
+        background-color: #d9534f;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #c9302c;
+        }
+
+    a.btn {
+        background-color: #fff;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+        a.btn:hover {
+            background-color: #f9f9f9;
+        }
+</style>
+<h2>Xóa sản phẩm ?</h2>
+<div class="panel panel-danger">
+    <div class="panel-body">
+        <h4 style="text-align:center;font-weight:bold;">Chi tiết sản phẩm</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                Tên sản phẩm
+            </dt>
+            <dd style=" margin-top: -12px;">
+                @Html.DisplayFor(model => model.TenDT)
+            </dd>
+            <dt style="margin-top: 12px;">
+                Ảnh minh họa
+            </dt>
+            <dd style=" margin-top: -12px;">
+                <img src="~/images/san-pham/@Html.DisplayFor(model => model.HinhChiTiet0)"
+                     style="width:100px;" />
+            </dd>
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color" style="display:flex;">
+                <input type="submit" value="Xóa" />
+                <div style="margin-left:20px;margin-top:11px;">@Html.ActionLink("Trở về", "Index")</div>
+
+            </div>
+        }
+    </div>
+</div>

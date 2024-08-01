@@ -1,0 +1,300 @@
+﻿@model IEnumerable<web_ban_dien_thoai.Models.DonHang>
+@using web_ban_dien_thoai.Controllers
+@using web_ban_dien_thoai.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+<!-- Thêm mã Razor để tính tổng giá trị Trigia -->
+@{
+    int tongTriGia = 0;
+    foreach (var item in Model)
+    {
+        if (item.DaNhan == true) // Nếu ThanhToan == true
+        {
+            tongTriGia += Convert.ToInt32(item.Trigia);
+        }
+    }
+}
+@{
+    testEntities database = new testEntities(); // Tạo đối tượng context
+}
+<h2 style="text-align:center">Quản lý đơn hàng</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+
+    th {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    td {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+</style>
+
+@{
+    DateTime? fromDate = TempData["FromDate"] as DateTime?;
+    DateTime? toDate = TempData["ToDate"] as DateTime?;
+    string customerName = TempData["CustomerName"] as string;
+}
+
+<div>
+    @using (Html.BeginForm("Index", "QLDonHang", FormMethod.Get))
+    {
+        <label for="fromDate">Từ ngày:</label>
+        <input type="date" name="fromDate" id="fromDate" value="@fromDate?.ToString(" yyyy-MM-dd")" />
+
+        <label for="toDate">Đến ngày:</label>
+        <input type="date" name="toDate" id="toDate" value="@toDate?.ToString(" yyyy-MM-dd")" />
+
+        <label for="customerName">Thông tin khách hàng:</label>
+        <input type="text" name="customerName" id="customerName" value="@customerName" />
+
+        <input type="submit" value="Tìm kiếm" />
+    }
+</div>
+<script>
+    // Function to save search parameters to sessionStorage
+    function saveSearchParameters() {
+        var fromDate = document.getElementById("fromDate").value;
+        var toDate = document.getElementById("toDate").value;
+        var customerName = document.getElementById("customerName").value;
+
+        sessionStorage.setItem("fromDate", fromDate);
+        sessionStorage.setItem("toDate", toDate);
+        sessionStorage.setItem("customerName", customerName);
+    }
+
+    // Function to load search parameters from sessionStorage
+    function loadSearchParameters() {
+        var storedFromDate = sessionStorage.getItem("fromDate");
+        var storedToDate = sessionStorage.getItem("toDate");
+        var storedCustomerName = sessionStorage.getItem("customerName");
+
+        if (storedFromDate) {
+            document.getElementById("fromDate").value = storedFromDate;
+        }
+
+        if (storedToDate) {
+            document.getElementById("toDate").value = storedToDate;
+        }
+
+        if (storedCustomerName) {
+            document.getElementById("customerName").value = storedCustomerName;
+        }
+    }
+
+    // Event listener to save search parameters when the form is submitted
+    document.addEventListener("DOMContentLoaded", function () {
+        loadSearchParameters(); // Load search parameters on page load
+
+        document.querySelector("form").addEventListener("submit", function () {
+            saveSearchParameters(); // Save search parameters when the form is submitted
+        });
+    });
+</script>
+
+@*<script>
+        var fromDate = "@fromDate";
+        var toDate = "@toDate";
+        var customerName = "@customerName";
+        if (fromDate) {
+            sessionStorage.setItem("fromDate", fromDate);
+            @{TempData["FromDate"] = null;}
+        }
+        if (toDate) {
+            sessionStorage.setItem("toDate", toDate);
+            @{TempData["ToDate"] = null;}
+        }
+        if (customerName) {
+            sessionStorage.setItem("customerName", customerName);
+            @{TempData["CustomerName"] = null;}
+        }
+
+        window.onload = function () {
+            var storedFromDate = sessionStorage.getItem("fromDate");
+            var storedToDate = sessionStorage.getItem("toDate");
+            var storedCustomerName = sessionStorage.getItem("customerName");
+
+            if (storedFromDate) {
+                document.getElementById("fromDate").value = storedFromDate;
+            }
+
+            if (storedToDate) {
+                document.getElementById("toDate").value = storedToDate;
+            }
+
+            if (storedCustomerName) {
+                document.getElementById("customerName").value = storedCustomerName;
+            }
+        };
+    </script>*@
+
+
+<h3>Tổng trị các đơn hàng đã giao: @tongTriGia</h3>
+<table class="table">
+    <tr style="background-color:darkorange;">
+        <th>
+            Mã đơn hàng
+        </th>
+        <th>
+            Mã khách hàng
+        </th>
+        <th>
+            Họ tên khách hàng
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Ngày đặt
+        </th>
+        <th>
+            Thành tiền
+        </th>
+
+        <th>
+            Địa chỉ giao hàng
+        </th>
+        <th>
+            Danh sách sản phẩm
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                VN-@Html.DisplayFor(modelItem => item.SoDH)
+            </td>
+            <td>
+                KH-@Html.DisplayFor(modelItem => item.MaKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenKhachHang)
+            </td>
+            <td>
+                @{
+                    // Lấy thông tin địa chỉ từ bảng KhachHang dựa trên quan hệ
+                    var stdkh = database.KhachHangs.SingleOrDefault(kh => kh.MaKH == item.MaKH);
+                    if (stdkh != null)
+                    {
+                        @stdkh.DienthoaiKH
+                    }
+                    else
+                    {
+
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trigia) $
+            </td>
+            <td>
+                @{
+                    // Lấy thông tin địa chỉ từ bảng KhachHang dựa trên quan hệ
+                    var khachHang = database.KhachHangs.SingleOrDefault(kh => kh.MaKH == item.MaKH);
+                    if (khachHang != null)
+                    {
+                        @khachHang.DiachiKH
+                    }
+                    else
+                    {
+
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    // Lấy thông tin sản phẩm từ bảng DienThoai dựa trên quan hệ
+                    var spList = database.CTDatHangs
+                        .Where(kh => kh.SoDH == item.SoDH)
+                        .Join(database.DienThoais, ctdh => ctdh.MaDT, dt => dt.MaDT, (ctdh, dt) => new { DienThoai = dt, CTDatHang = ctdh })
+                        .ToList();
+
+                    if (spList.Any())
+                    {
+                        foreach (var sp in spList)
+                        {
+                            <div style="width:230px;"> @sp.DienThoai.TenDT  </div>
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.DaNhan == true)
+                    {
+                        <strong style="color: green;">Đã nhận</strong>
+                    }
+                    else if (item.DaNhan == false)
+                    {
+                        <strong style="color: red;">Đã hủy</strong>
+                    }
+                    else
+                    {
+                        <strong style="color: blue;">Đã xác nhận</strong>
+                    }
+                }
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.SoDH }, new { @class = "edit-button" })
+
+                @Html.ActionLink("Xóa", "Delete", new { id = item.SoDH }, new { @class = "delete-button" })
+            </td>
+
+        </tr>
+    }
+
+</table>

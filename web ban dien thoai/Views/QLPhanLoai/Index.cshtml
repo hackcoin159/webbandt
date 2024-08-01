@@ -1,0 +1,92 @@
+﻿@model IEnumerable<web_ban_dien_thoai.Models.PhanLoai>
+@using web_ban_dien_thoai.Controllers
+@using web_ban_dien_thoai.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+
+    th,
+    td {
+        border: 1px solid #000; /* Border mặc định */
+        padding: 8px; /* Add padding for better appearance */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+</style>
+<h2>Quản lý thương hiệu</h2>
+<p>
+    @Html.ActionLink("TẠO MỚI", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr style="background-color:darkorange;">
+        <th>
+            Mã thương hiệu
+        </th>
+        <th>
+            Tên thương hiệu
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaPL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenPhanLoai)
+            </td>            
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaPL }, new { @class = "edit-button" })
+
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaPL }, new { @class = "delete-button" })
+            </td>
+
+        </tr>
+    }
+
+</table>

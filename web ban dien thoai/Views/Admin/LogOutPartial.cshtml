@@ -1,0 +1,9 @@
+﻿@using web_ban_dien_thoai.Models;
+@{
+    NhanVien nv = (NhanVien)Session["TaiKhoanAD"];
+
+}
+@if (nv != null)
+{
+    <a href="@Url.Action("DangXuat","Admin")" style="display:flex">  <img style="width:40px" src="~/images/exit.png" /> <h1 style="font-size:13px;margin:auto;margin-left:6px;">THOÁT QUẢN LÝ</h1> </a>
+}

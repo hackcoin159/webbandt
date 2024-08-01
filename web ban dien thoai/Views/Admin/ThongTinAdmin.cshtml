@@ -1,0 +1,110 @@
+﻿@using web_ban_dien_thoai.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADlayout.cshtml";
+    NhanVien admin = Session["TaiKhoanAD"] as NhanVien;
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 80%;
+        max-width: 800px;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        width: 300px;
+    }
+
+        th:first-child, td:first-child {
+            width: 30%;
+        }
+
+    a {
+        text-decoration: none;
+        color: #337ab7;
+    }
+</style>
+<body>
+    <h2 class="hoang-phuc-name-acc">THÔNG TIN CÁ NHÂN</h2>   
+    <table>
+        <tr>
+            <th>Thông tin</th>
+            <th>Chi tiết   <a style="padding-left: 390px;"> @Html.ActionLink("Chỉnh sửa", "EditInfo", new { id = admin.MaNV }, new { @class = "edit-button" })</a></th>
+        </tr>
+        <tr>
+            <td>Mã nhân viên</td>
+            <td>PM-@admin.MaNV</td>
+        </tr>
+        <tr>
+            <td>Họ tên nhân viên</td>
+            <td>@admin.HoTenNV</td>
+        </tr>
+        <tr>
+            <td>Ngày sinh</td>
+            <td>@admin.Ngaysinh</td>
+        </tr>
+        <tr>
+            <td>Giới tính</td>
+            <td>@admin.Gioitinh</td>
+        </tr>
+        <tr>
+            <td>Chức vụ</td>
+            <td>@admin.VaiTro</td>
+        </tr>
+        <tr>
+            <td>Địa chỉ nhân viên</td>
+            <td>@admin.DiachiNV</td>
+        </tr>
+        <tr>
+            <td>Email nhân viên</td>
+            <td>@admin.Email</td>
+        </tr>
+        <tr>
+            <td>Điện thoại nhân viên</td>
+            <td>@admin.DienthoaiNV</td>
+        </tr>
+    </table>
+
+
+    <div>
+        <table>
+            <tr>
+                <th>Thông tin tài khoản</th>
+                <th>Chi tiết</th>
+            </tr>
+            <tr>
+                <td>Tên đăng nhập</td>
+                <td>@admin.TenDN</td>
+            </tr>
+            <tr>
+                <td>Mật khẩu</td>
+                <td>
+                    ********
+                    <a style="padding-left: 15px;"> @Html.ActionLink("Chỉnh sửa", "EditPass", new { id = admin.MaNV }, new { @class = "edit-button" })</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>

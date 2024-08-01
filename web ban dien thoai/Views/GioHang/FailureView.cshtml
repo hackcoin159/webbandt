@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "FailureView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+    .carousel-indicators {
+        position: static;
+    }
+
+        .carousel-indicators li {
+            width: 300px;
+            height: 100%;
+            opacity: 0.8;
+        }
+</style>
+<body>
+    <div style="text-align:center">
+        <h2 style="margin:50px 160px 0px 160px;font-size:100px;font-weight:bold;color:red;">
+            LỖI
+        </h2>
+        <img style="margin:auto;width:300px" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczQ4YXg1ZDdib25oMjh2ZWZsc3ZwZHVzaW40cmRiM3phcGkxOGs2NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8L0Pky6C83SzkzU55a/giphy.gif" />
+        <p>
+            @Html.ActionLink("Về trang chủ", "Index", "TrangChu", null, new { @class = "btn-btn-primary" })
+        </p>
+        <p id="countdown" style="font-size: 13px; color: red;">Trở về trang chủ sau <span id="seconds">5</span> giây.</p>
+    </div>
+    <script>
+        // Hàm chuyển hướng về trang chủ sau 5 giây
+        function redirectToHomePage() {
+            window.location.href = '/TrangChu/Index';
+        }
+
+        // Hàm cập nhật số giây đếm ngược và chuyển hướng
+        function updateCountdown() {
+            var secondsElement = document.getElementById('seconds');
+            var seconds = parseInt(secondsElement.innerText);
+
+            if (seconds > 0) {
+                seconds -= 1;
+                secondsElement.innerText = seconds;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                redirectToHomePage();
+            }
+        }
+
+        // Bắt đầu đếm ngược khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(updateCountdown, 1000);
+        });
+    </script>
+</body>

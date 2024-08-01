@@ -1,0 +1,273 @@
+﻿@model IEnumerable<web_ban_dien_thoai.Models.CTDatHang>
+@using web_ban_dien_thoai.Controllers
+@using web_ban_dien_thoai.Models
+@using System.Linq
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+@{
+    int tongThanhTien = 0;
+    foreach (var item in Model)
+    {
+        tongThanhTien += Convert.ToInt32(item.Thanhtien);
+    }
+}
+@{
+    testEntities database = new testEntities(); // Tạo đối tượng context
+}
+
+@{
+    int thangHienTai = DateTime.Now.Month;
+    int totalCustomers = database.KhachHangs.Count();
+    int totalRentedProperties = database.DienThoais.Count(mb => mb.Soluongban >= 0);
+    int totalDHdaGiao = database.DonHangs
+    .Where(dh => dh.DaNhan == true && dh.NgayDH.HasValue && dh.NgayDH.Value.Month == thangHienTai)
+    .Count();
+    int totalDHchuagiao = database.DonHangs
+        .Where(dh => dh.DaNhan != true && dh.NgayDH.HasValue && dh.NgayDH.Value.Month == thangHienTai)
+        .Count();
+    int? totalViewsNullable = database.DienThoais.Sum(dt => dt.soluotxem);
+    int totalViews = totalViewsNullable.HasValue ? totalViewsNullable.Value : 0;
+    int? totalRevenue = database.DonHangs
+.Where(dh => dh.DaNhan == true) // Chỉ lấy các đơn hàng đã nhận
+.SelectMany(dh => dh.CTDatHangs) // Lấy tất cả các chi tiết đặt hàng liên quan
+.Sum(ct => ct.Thanhtien) ?? 0; // Tính tổng doanh số, nếu null thì lấy 0
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+
+    th {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    td {
+        border: 1px solid #000; /* Border mặc định */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+    .thongke-4 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .thongke-box {
+        width: calc(25% - 20px);
+        background-color: #f0f0f0;
+        padding: 9px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+        .thongke-box h4 {
+            color: #333;
+        }
+
+        .thongke-box p {
+            font-size: 18px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+
+    .bieudo-container {
+        display: flex; /* Use flexbox to align the charts horizontally */
+    }
+
+    .bieudo {
+        margin-left: 150px;
+        width: 66%; /* Each chart takes up 50% of the container width */
+        padding: 10px; /* Add some spacing between charts */
+    }
+</style>
+
+<h2 style="text-align:center">THỐNG KÊ</h2>
+<div class="thongke-4" style="text-decoration: none; justify-items: center; flex-wrap: wrap;">
+    <div class="thongke-box thongke-box-khachhang" style="background-color: rgba(255, 225, 71, 0.5); width: 24%">
+        <h4>Thống kê khách hàng</h4>
+        <p>Tổng số khách hàng: @totalCustomers</p>
+        <a href="~/QLKhachHang/Index"> Xem thêm </a>
+    </div>
+    <div class="thongke-box thongke-box-matbangthue" style="background-color: rgba(212, 225, 255, 0.5); width: 24%;margin-left:50px; ">
+        <h4>Thống kê sản phẩm</h4>
+        <p>Tổng số sản phẩm: @totalRentedProperties</p>
+        <a href="~/QLMatBang/Index"> Xem thêm </a>
+    </div>
+    <div class="thongke-box thongke-box-doanhso" style="background-color: rgba(57, 136, 0, 0.5); width: 24%; margin-left: 50px; ">
+        <h4>Số lượt xem</h4>
+        <p>Tổng lượt xem: @totalViews /Tháng</p>
+        <a href="~/QLDonHang/Index"> Xem thêm </a>
+    </div>
+    <div class="thongke-box thongke-box-doanhso" style="background-color: rgba(212, 136, 203, 0.5); width: 24%; margin-top: 50px; ">
+        <h4>Thống kê doanh số</h4>
+        <p>Tổng doanh số: @totalRevenue $/Tháng</p>
+        <a href="~/QLDonHang/Index"> Xem thêm </a>
+    </div>
+    <div class="thongke-box thongke-box-doanhso" style="background-color: rgba(212, 222, 203, 0.5); width: 24%; margin-top: 50px; margin-left: 50px; ">
+        <h4>Thống kê đơn hàng đã giao</h4>
+        <p>Tổng đơn: @totalDHdaGiao Đơn/ Tháng</p>
+        <a href="~/QLDonHang/Index"> Xem thêm </a>
+    </div>
+    <div class="thongke-box thongke-box-doanhso" style="background-color: rgba(212, 100, 100, 0.5); width: 24%; margin-top: 50px; margin-left: 50px; ">
+        <h4>Thống kê đơn hàng đang giao</h4>
+        <p>Tổng đơn: @totalDHchuagiao Đơn/ Tháng</p>
+        <a href="~/QLDonHang/Index"> Xem thêm </a>
+    </div>
+
+</div>
+
+<!-- Add this section to your existing code -->
+
+<!--<div class="bieudo">
+    <canvas id="revenueChartDaNhan"></canvas>-->
+    @*<canvas id="revenueChartChuaNhan"></canvas>*@
+<!--</div>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+<script>
+    // Biểu đồ cho DaNhan == true
+    var ctxDaNhan = document.getElementById('revenueChartDaNhan').getContext('2d');
+
+    var daNhanData = @Html.Raw(Json.Encode(Model
+        .Where(item => item.DonHang.DaNhan == true)
+        .GroupBy(item => item.DonHang.NgayDH)
+        .OrderBy(group => group.Key)
+        .Select(donHang => new { NgayDH = donHang.Key, DoanhSo = donHang.Sum(item => item.Thanhtien) })
+        .Where(item => item.NgayDH != null)
+        .Select(item => new { NgayDH = item.NgayDH.Value.ToString("dd/MM/yyyy"), DoanhSo = item.DoanhSo })
+    ));
+
+    var labelsDaNhan = daNhanData.map(item => item.NgayDH);
+    var dataDaNhan = daNhanData.map(item => item.DoanhSo);
+
+    var revenueDataDaNhan = {
+        labels: labelsDaNhan,
+        datasets: [
+            {
+                label: 'Doanh số (Đã thanh toán)',
+                data: dataDaNhan,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            }
+        ]
+    };
+
+    var revenueChartDaNhan = new Chart(ctxDaNhan, {
+        type: 'bar',
+        data: revenueDataDaNhan,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+
+    // Biểu đồ cho DaNhan != true
+    @*var ctxChuaNhan = document.getElementById('revenueChartChuaNhan').getContext('2d');
+
+    var chuaNhanData = @Html.Raw(Json.Encode(Model
+        .Where(item => item.DonHang.DaNhan != true)
+        .GroupBy(item => item.DonHang.NgayDH)
+        .OrderBy(group => group.Key)
+        .Select(donHang => new { NgayDH = donHang.Key, DoanhSo = donHang.Sum(item => item.Thanhtien) })
+        .Where(item => item.NgayDH != null)
+        .Select(item => new { NgayDH = item.NgayDH.Value.ToString("dd/MM/yyyy"), DoanhSo = item.DoanhSo })
+    ));
+
+    var labelsChuaNhan = chuaNhanData.map(item => item.NgayDH);
+    var dataChuaNhan = chuaNhanData.map(item => item.DoanhSo);
+
+    var revenueDataChuaNhan = {
+        labels: labelsChuaNhan,
+        datasets: [
+            {
+                label: 'Doanh số (Chưa thanh toán)',
+                data: dataChuaNhan,
+                backgroundColor: 'rgba(244, 67, 54, 0.2)',
+                borderColor: 'rgba(244, 67, 54, 1)',
+                borderWidth: 1,
+            }
+        ]
+    };
+
+    var revenueChartChuaNhan = new Chart(ctxChuaNhan, {
+        type: 'bar',
+        data: revenueDataChuaNhan,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });*@
+</script>
+
+<div class="bieudo-container">
+    <div class="bieudo">
+        <canvas id="revenueChartDaNhan"></canvas>
+    </div>
+    @*<div class="bieudo">
+            <canvas id="revenueChartChuaNhan"></canvas>
+        </div>*@
+</div>
+
+
+@*<div class="chuthich">
+        <a style="background-color: rgba(75, 192, 192, 0.2); border-color: rgba(75, 192, 192, 1); padding-right: 100px; border: 1px solid rgba(75, 192, 192, 1);
+    display: inline-block;padding-top:13px"></a> <a>Đã thanh toán</a>
+    </div>
+    <div class="chuthich">
+        <a style="background-color: rgba(244, 67, 54, 0.2); border-color: rgba(244, 67, 54, 1); padding-right: 100px; border: 1px solid rgba(75, 192, 192, 1);
+    display: inline-block; padding-top: 13px "></a> <a>Chưa thanh toán</a>
+    </div>*@
+

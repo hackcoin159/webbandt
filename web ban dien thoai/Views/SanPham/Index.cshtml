@@ -1,0 +1,181 @@
+﻿@using web_ban_dien_thoai.Models;
+@using System.Collections.Generic
+@model IEnumerable<DienThoai>
+@{
+    ViewBag.Title = "Trang sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta charset="utf-8" />
+<meta name="viewport" contenzt="width=device-width, initial-scale=1.0">
+<title>Trang sản phẩm </title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+    .carousel-indicators {
+        position: static;
+    }
+
+        .carousel-indicators li {
+            width: 300px;
+            height: 100%;
+            opacity: 0.8;
+        }
+</style>
+
+
+<body>
+
+
+    <div style="margin-left:30px;">
+        <div style="text-decoration: none; color: black; justify-content: center; align-items: center; text-align: center;">
+
+            @if (!string.IsNullOrEmpty(ViewBag.SelectedTopic))
+            {
+                <a style="font-size: 32px;">Danh sách sản phẩm @ViewBag.SelectedTopic </a>
+            }
+            else
+            {
+                <!-- Render book information as needed -->
+                <a style="font-size: 32px;">Danh sách sản phẩm</a>
+            }
+
+
+
+
+
+
+        </div>
+        <div style="justify-content: center; align-items: center; text-align: center;">
+            @Html.Action("LayChuDe", "SanPham")
+
+            @{
+                string searchQuery = TempData["SearchQuery"] as string;
+            }
+
+            <div class="tim-kim" style="text-align: center; margin-top: 20px;">
+                <form action="@Url.Action("Search", "SanPham")" method="get">
+                    <input type="text" name="searchQuery" placeholder="Tìm kiếm điện thoại..." value="@searchQuery" />
+                    <button class="btn-timkiem" style="padding: 8px 16px; border: 2px solid #008CBA; border-radius: 5px; background-color: #008CBA; color: white; font-size: 16px; cursor: pointer; transition-duration: 0.4s;" type="submit">Tìm Kiếm</button>
+                </form>
+            </div>
+
+            <script>
+    // Clear TempData after reading its value
+    var searchQuery = "@searchQuery";
+    if (searchQuery) {
+        sessionStorage.setItem("searchQuery", searchQuery);
+        @(TempData["SearchQuery"] = null)
+    }
+
+    // Set the input value on page load
+    window.onload = function () {
+        var storedSearchQuery = sessionStorage.getItem("searchQuery");
+        if (storedSearchQuery) {
+            document.getElementsByName("searchQuery")[0].value = storedSearchQuery;
+        }
+    };
+            </script>
+
+
+        </div>
+        @*sap xep*@
+        <div style="text-align:right; margin-right:40px; margin-bottom:5px;">
+            <select id="sort-select" onchange="location = this.value;">
+                <option value="@Url.Action("Index", "SanPham", new { sortOrder = "name_desc" })">Sắp xếp</option>
+                <option value="@Url.Action("Index", "SanPham", new { sortOrder = "price" })">Giá tăng dần</option>
+                <option value="@Url.Action("Index", "SanPham", new { sortOrder = "price_desc" })">Giá giảm dần</option>
+            </select>
+        </div>
+
+
+    </div>
+
+    <div>
+        <div class="hang-tin-tuc" style="padding: 0 40px 0 40px; margin-top: 10px; margin-right: 170px; margin-left: 170px; display: flex; justify-content: space-between; justify-items: center; flex-wrap: wrap; ">
+            @foreach (var DienThoai in Model)
+            {
+                <div class="tintuc" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 250px; padding: 10px 20px; background-color: snow; border-radius: 4px;margin-top:10px;">
+
+                    <a href="@Url.Action("Details", "SanPham", new { id = DienThoai.MaDT })">
+                        <img src="~/images/san-pham/@DienThoai.HinhChiTiet0" alt="error" style="border-radius: 10px 5px 0 0;width:100%">
+                    </a>
+                    <div style="margin-top:10px;">
+                        <h4 class="tieu-de-tt" style="font-size:14px">@DienThoai.TenDT</h4>
+
+                        <div style="margin-top: 10px;">
+                            <a style="border: 1px solid grey; padding: 3.5px; border-radius: 10px;">@DienThoai.LoaiManHinh</a>
+                            <a style="border: 1px solid grey; padding: 3.5px; border-radius: 10px;">@DienThoai.ManHinh"</a>
+                        </div>
+
+
+                        @if (DienThoai.Discount == 0)
+                        {
+                            <p class="gioi-thieu-tt" style="font-size:18px;color:orangered;margin-top:10px;">
+                                @DienThoai.GiaCuoi $
+                            </p>
+                        }
+                        @if (DienThoai.Discount > 0)
+                        {
+                            <div style="margin-top: 10px; font-size: 14px;color:gray;">
+                                <a style="  padding: 3.5px;"> <del style="color: gray;">@DienThoai.GiaGoc $</del></a>
+                                <a style=" padding: 3.5px; ">@DienThoai.Discount%</a>
+                            </div>
+                            <p class="gioi-thieu-tt" style="font-size:18px;color:orangered;margin-top:10px;">
+                                @DienThoai.GiaCuoi $
+                            </p>
+                        }
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nut-xem-them-fake" style="text-decoration: none; color: black; justify-content: center; align-items: center; text-align: center;margin-top:40px;">
+            <div class="btn btn-outline-secondary" style="width: 300px; cursor: pointer;" onclick="redirectToSanPhamIndex()">
+                Xem thêm
+            </div>
+            <script>
+                function redirectToSanPhamIndex() {
+                    window.location.href = "/sanpham/index";
+                }
+            </script>
+        </div>
+    </div>
+    <div style="margin-top:100px;">
+        <h2>    </h2>
+    </div>
+</body>

@@ -1,0 +1,18 @@
+﻿@using web_ban_dien_thoai.Models
+@model IEnumerable<PhanLoai>
+
+<ul class="" style="">
+    <a href="~/SanPham/Index" style="text-decoration: none;">
+        Tất cả
+    </a>
+    @foreach (var phanLoai in Model)
+    {
+<a style="text-decoration: none;font-size:18px">
+    •
+</a>
+        <a href="@Url.Action("SPTheoChuDe", "SanPham", new { id=phanLoai.MaPL }) "
+           class="" style="margin-left: 3px;text-decoration: none;">
+            @phanLoai.TenPhanLoai
+        </a>
+    }
+</ul>

@@ -1,0 +1,111 @@
+﻿@using web_ban_dien_thoai.Models;
+@model List<MatHangMua>
+@{
+    ViewBag.Title = "HienThiGioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+    .carousel-indicators {
+        position: static;
+    }
+
+        .carousel-indicators li {
+            width: 300px;
+            height: 100%;
+            opacity: 0.8;
+        }
+</style>
+<body>
+
+    <h2 style="text-align:center">Thông tin đơn hàng</h2>
+    <table class="table table-bordered"  style="margin-left: 150px; margin-right: 150px; width: 1200px;">
+        <thead>
+            <tr>
+                <b>
+                <th>Tên sản phẩm</th>
+                <th>Ảnh</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Chi tiết</th>
+                <th>Cập nhật</th>
+                <th>Xóa</th>
+                </b>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dt in Model)
+            {
+                <tr>
+                    <td>@dt.TenDT</td>
+                    <td><img src="~/images/san-pham/@dt.HinhAnh" style="width: 90px;" /></td>
+                    @using (Html.BeginForm("CapNhatMatHang", "GioHang", new { MaSP = dt.MaDT }))
+                    {
+                        <td>
+                            <input type="number" min="1" max="10" value="@dt.SoLuong" name="SoLuong" />
+                        </td>
+                        <td>@dt.GiaCuoi$</td>
+                        <td>@dt.ThanhTien() $</td>
+                        <td>
+                            @Html.ActionLink("THÔNG TIN", "Details", "SanPham", new { id = dt.MaDT }, new { @class = "btn btn-success" })
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">CẬP NHẬT</button>
+                        </td>
+                    }
+                    <td>
+                        @Html.ActionLink("XÓA", "XoaMatHang", "GioHang", new { MaSP = dt.MaDT }, new { @class = "btn btn-danger" })
+                    </td>
+
+                </tr>
+            }
+            <tr style="font-weight:bold; text-align:right; color:red;">
+                <td colspan="5"> </td>
+                <td colspan="4">Tổng tiền: @ViewBag.TongTien $</td>
+            </tr>
+            <tr style="font-weight:bold; text-align:center;">
+                <td colspan="9">
+                    @Html.ActionLink("XÁC NHẬN", "DatHang", null, new { @class = "btn btnprimary" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </br>
+    </br>
+</body>
+

@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="~/Content/myStyle.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<style>
+   .body {
+        font-family: Roboto;
+    }
+
+    .main-menu ul.sub-menu {
+        position: absolute;
+        padding: 0px 0px;
+        list-style: none;
+        width: 150px;
+        display: none;
+        margin-left: 21px;
+    }
+
+    .main-menu li a {
+        font-weight: bold;
+        color: white;
+        display: block;
+        padding: 17px 55px;
+        text-decoration: none;
+    }
+  
+</style>
+<body>
+    <div class=" wrapper">
+        <div class=" header">
+            <nav class="container-web">
+                <div style="justify-content: center; display: flex; align-items: center; text-align: center;">
+                    <a class="top-logo">
+                        <img style="max-width: 100%; max-height: 100px; margin-top: -56px;" class="logo" href="~/TrangChu/Index" src="~/images/banner/Sony-Logo-1957.png" />
+
+                    </a>
+                </div>
+
+
+                <ul class=" main-menu" style="font-size: 13px; padding: 0 0 0 350PX;">
+
+                    <li>
+                        <a href="~/TrangChu/Index">TRANG CHỦ</a>
+                    </li>
+
+                    <li>
+                        <a href="~/SanPham/Index">SẢN PHẨM</a>
+
+                    </li>
+                    <li>
+                        <a href="~/SuKien/Index">KHUYẾN MÃI</a>
+                    </li>
+                    <li>
+                        <a href="#">VỀ CHÚNG TÔI</a>
+                        <ul class="sub-menu" style="font-size:10px;margin-top:2.5px;">
+                            <li><a href="~/TrangChu/Map">Thông tin</a></li>
+                            <li><a href="#">Chính sách</a></li>
+                            <li><a href="#">Tuyển dụng</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+
+                        </ul>
+                    </li>
+                    <li style="margin-left:87px;display:flex;">
+                        <div style="margin-top:-34.5px">
+                            @Html.Action("GioHangPartial", "GioHang")
+                        </div>
+                    <li>
+                        <a href="#">
+                            <img style="width:20px" src="~/images/img-GUI/user.png" />
+                        </a>
+                        <ul class="sub-menu-user " style="font-size: 10px; margin-left: -6.5px">
+                            @Html.Action("UserPartial", "NguoiDung")
+                        </ul>
+                    </li>
+
+
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+
+
+
+
+
+
+        <div>
+            @RenderBody()
+
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+
+
+
+
+
+
+    @*nút quay lại đầu trang*@
+    <button class="dau-trang" onclick="topFunction()" id="myBtn" title="Go to top" style="background-color: transparent; border: none; /* Xóa đường viền */">
+        <img style="width:55px" src="~/images/img-GUI/back top.png" />
+    </button>
+    <script class="quay-len-dau-trang">
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+
+
+    <div>
+        <style>
+
+            #thank-you-message {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+                margin-top: 10px;
+            }
+            /* Support bubble styles */
+            #support-bubble {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                background-color: #3498db;
+                color: white;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                z-index: 999;
+            }
+
+            /* Support form styles */
+            #support-form {
+                position: fixed;
+                bottom: 80px;
+                left: 20px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                z-index: 998;
+            }
+
+                #support-form label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+
+                #support-form input,
+                #support-form textarea {
+                    width: 100%;
+                    padding: 8px;
+                    margin-bottom: 10px;
+                }
+
+                #support-form button {
+                    background-color: #3498db;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+        </style>
+        <!-- Support bubble -->
+        <div id="support-bubble" onclick="toggleSupportBubble()">
+            <img src="~/images/img-GUI/mail (1).png" style="width:31px;">
+        </div>
+
+        <!-- Support form (hidden by default) -->
+        <div id="support-form" style="display: none;">
+            <form id="feedback-form">
+                <label for="name" style="font-weight: bold; font-size: 14px;">*Họ tên:</label>
+                <input type="text" id="name" name="name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+
+                <label for="lienLac">*Liên lạc:</label>
+                <input type="text" id="lienLac" name="lienLac" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+
+                <label for="issue">*Vấn đề:</label>
+                <select id="issue" name="issue" required>
+                    <option value="Vấn đề mua hàng">Vấn đề mua hàng</option>
+                    <option value="Vấn đề sản phẩm">Vấn đề sản phẩm</option>
+                    <option value="Yêu cầu tư vấn">Yêu cầu tư vấn</option>
+                    <option value="khác">Khác</option>
+                </select>
+
+
+                <label for="noiDung">*Nội dung:</label>
+                <textarea id="noiDung" name="noiDung" required></textarea>
+
+                <button type="button" onclick="sendFeedback()">Gửi phản hồi</button>
+
+
+                <div id="thank-you-message" style="display: none;">
+                    <p>Cảm ơn bạn đã gửi phản hồi!</p>
+                </div>
+
+            </form>
+
+            <script src="path/to/your/script.js"></script>
+        </div>
+
+        <script>
+            function toggleSupportBubble() {
+                var supportForm = document.getElementById('support-form');
+                supportForm.style.display = (supportForm.style.display === 'none' || supportForm.style.display === '') ? 'block' : 'none';
+            }
+
+            // Trong file script.js
+            function sendFeedback() {
+                // Lấy giá trị từ các ô nhập liệu
+                var name = document.getElementById('name').value;
+                var lienLac = document.getElementById('lienLac').value;
+                var vanDe = document.getElementById('issue').value;
+                var noiDung = document.getElementById('noiDung').value;
+
+                // Gửi dữ liệu lên server sử dụng AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '/GopY/LuuGopY',
+                    data: {
+                        MaGY: 0, // Giả sử MaGY là tự tăng (IDENTITY), không cần gửi giá trị
+                        TenKH: name,
+                        LienLac: lienLac,
+                        VanDe: vanDe,
+                        NoiDung: noiDung
+                    },
+                    success: function (response) {
+                        console.log('Dữ liệu đã được lưu thành công!');
+                        showThankYouMessage();
+                    },
+                    error: function (error) {
+                        console.error('Lỗi khi lưu dữ liệu:', error);
+                    }
+                });
+
+                // Xóa nội dung ô nhập liệu
+                document.getElementById('name').value = '';
+                document.getElementById('lienLac').value = '';
+                document.getElementById('issue').value = '';
+                document.getElementById('noiDung').value = '';
+
+                // Ẩn Form sau khi gửi phản hồi
+                toggleSupportBubble();
+            }
+
+            function showThankYouMessage() {
+                var thankYouMessage = document.getElementById('thank-you-message');
+                thankYouMessage.style.display = 'block';
+
+                // Đặt timeout để ẩn thông báo sau 3 giây (3000 miligiây)
+                setTimeout(function () {
+                    thankYouMessage.style.display = 'none';
+                }, 3000);
+            }
+
+        </script>
+    </div>
+
+
+
+</body>
+
+<footer style="">
+    <div class="footer-web" style="background-color:black;color:white;">
+        <div class="start-footer" style="">
+
+            <a style="text-decoration: none; margin-left: 44px; color: #e4e7eb; font-size: .8125rem; line-height: 1.923; margin-top: 20px;">
+                <h1 style="font-size:16px;">Tìm cửa hàng</h1>
+                <form>
+                    <input placeholder="Nhập vị trí của bạn..." />
+                    <button style="padding: 4px 10px; border: 2px solid #008CBA; border-radius: 5px; background-color: #008CBA; color: white; font-size: 10px; cursor: pointer; transition-duration: 0.4s;">Tìm Kiếm</button>
+
+                </form>
+            </a>
+            <a style="text-decoration: none; margin-left: 44px; color: #e4e7eb; font-size: .8125rem; line-height: 1.923; margin-top: 20px;">
+                <h1 style="font-size:16px;">Hỗ trợ trực tuyến</h1>
+                Mạng lưới sửa chữa </br>
+                Biểu phí sửa chữa </br>
+                Kiểm tra bảo hành </br>
+                Chính sách bảo hành
+            </a>
+            <a style="text-decoration: none; margin-left: 44px; color: #e4e7eb; font-size: .8125rem; line-height: 1.923; margin-top: 20px;">
+                <h1 style="font-size:16px;">Trải nghiệm</h1>
+                Mua hàng trực tuyến </br>
+                Facebook </br>
+                Sony VietNam Facebook </br>
+                Kênh bán hàng theo dự án
+            </a>
+            <a style="text-decoration: none; margin-right: 44px; color: #e4e7eb; font-size: .8125rem; line-height: 1.923; margin-top: 20px;">
+                <h1 style="font-size:16px;">Tin tức &   thông tin</h1>
+                Tin tức </br>
+                Cam kết về môi trường </br>
+                Xem chương trình khuyến mãi
+            </a>
+
+        </div>
+
+
+        <div class="end-footer">
+            <div class="gach-ngang" style=" border: unset; border-top: solid 0.0625rem #3c3c42;">
+
+            </div>
+            <div>
+                <div style="color: white; text-decoration: none; margin-top: 5px; margin-left: 44px; padding-bottom: 10px; font-size: .6875rem; line-height: 1.636363;">
+                    <div>
+                        <div style="font-weight:bold;">ĐIỀU KHOẢN SỬ DỤNG<a style="padding-left:10px"></a>QUYỀN RIÊNG TƯ</div>
+                        2023 © BẢN QUYỀN THUỘC SỞ HỮU CÔNG TY SYNOS VIỆT NAM.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</footer>
+</html>

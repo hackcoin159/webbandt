@@ -1,0 +1,163 @@
+﻿@model IEnumerable<web_ban_dien_thoai.Models.GopY>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<h2 style="text-align:center">Quản lý hỗ trợ</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    table {
+        border-collapse: collapse; /* Border sát nhau */
+    }
+    /* Add this to your existing style section */
+    .filtered {
+        display: table-row;
+        background-color: lightyellow; /* Change the background color as needed */
+    }
+
+    th,
+    td {
+        border: 1px solid #000; /* Border mặc định */
+        padding: 8px; /* Add padding for better appearance */
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+    /* Định dạng nút sửa */
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    /* Định dạng nút xóa */
+    .delete-button {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div style="display:flex;">
+    <h3>Lọc trạng thái:</h3>
+    @Html.DropDownList("completedFilter", new SelectList(new[] { new { Value = true, Text = "Hoàn thành" }, new { Value = false, Text = "Chưa hoàn thành" } }, "Value", "Text"), "Tất cả")
+</div>
+
+
+<table class="table" id="danhGiaTable">
+    <tr style="background-color:darkorange;">
+        <th style="width:50px;">
+            Mã hỗ trợ
+        </th>
+        <th style="width:50px;">
+            Họ Tên Khách Hàng
+        </th>
+        <th style="width:50px;">
+            Thông tin liên lạc
+        </th>
+        <th style="width:70px;">
+            Vấn đề
+        </th>
+        <th style="width:270px;">
+            Nội dung
+        </th>
+        <th style="width:90px;">
+            Ngày gửi
+        </th>
+        <th style="width:270px;">
+            Ghi chú
+        </th>
+        <th style="width:70px;">
+            Trạng thái
+        </th>
+        <th style="width:150px;">
+            Thao tác
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaGY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LienLac)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VanDe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiDung)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDang)
+            </td>
+            <td>
+                <a style="margin-left:5px;">@Html.DisplayFor(modelItem => item.GhiChu) </a>
+            </td>
+            <td>
+                @if (item.TrangThai == true)
+                {
+                    <span style="color: green;">Hoành thành</span>
+                }
+                else
+                {
+                    <span style="color: red;">Không hoành thành</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaGY }, new { @class = "edit-button" })
+
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaGY }, new { @class = "delete-button" })
+        </tr>
+    }
+
+</table>
+
+<!-- Filter script -->
+<!-- Filter script -->
+<script>
+    $(document).ready(function () {
+        $("#completedFilter").change(function () {
+            var selectedStatus = $(this).val();
+
+            // Redirect to the Index action with the selected completion status
+            window.location.href = "/GopY/Index?completedFilter=" + selectedStatus;
+        });
+    });
+</script>
+
+
+
+
+
+
+

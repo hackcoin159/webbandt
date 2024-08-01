@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Trang sự kiện";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang sự kiện </title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+
+
+    /* Add this CSS to your existing stylesheet or in a <style> tag in the <head> section of your HTML */
+
+    .hang-km {
+        display: flex;
+        justify-content: center; /* Centers the "sukien" elements */
+    }
+
+    .sukien {
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 24%;
+        padding: 10px 20px;
+        background-color: snow;
+        margin: 0 5px; /* Add a small margin between the "sukien" elements */
+    }
+</style>
+
+<body >
+    <div style="display:flex;">
+        <div style="margin-left:30px;">
+            <div style="text-decoration: none; color: black;">
+                <a style="font-size: 32px; margin-left: 40px; ">Khuyến mãi</a>
+                <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.5); width: 950px; margin-left: 40px;"> </div>
+            </div>
+            <div>
+
+            </div>
+            <div style="margin-top:10px;">
+                <div class="hang-tin-tuc" style="padding: 0 40px 0 40px; display: flex;  justify-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+
+                    <div style="border: 1px solid rgba(128, 128, 128, 0.5); width: 950px;display:flex;">
+                        <div>
+                            <img src="~/images/khuyen-mai/km1.jpg" style="width:300px;height:200px;margin:1px 1px 1px 1px;" />
+                        </div>
+                        <div style="margin-left:10px;margin-top:22px;">
+                            <div style="text-decoration: none; color: #333; font-size: 18px;font-weight:bold;">
+                                Cảm ơn hàng ngàn người nổi tiếng tin tưởng lựa chọn mua sắm iPhone 15 tại SYNOS Việt Nam
+                            </div>
+                            <div>
+                                <img src="~/images/img-GUI/time.png" style="width:16px;" /> 16-10-2023
+                            </div>
+                            <div>
+                                Chỉ sau vài tuần mở bán iPhone 15 series, Di Động Việt đã đón tiếp và phục vụ hàng </br>
+                                trăm người nổi tiếng đến mua sắm, đa số đều lựa chọn hình thức Trade-in thu cũ đổi </br>
+                                mới. Tính riêng trong 2 tuần mở bán iPhone 15 series, Di Động Việt – đại lý uỷ quyền.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div style="">
+            <div style="text-decoration: none; color: black;">
+                <a style="font-size: 32px; margin-left: 10px; ">Xem nhiều</a>
+                <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.5); width: 350px; margin-left: 10px;"> </div>
+            </div>
+            <div>
+
+            </div>
+            <div style="margin-top:10px;">
+                <div class="hang-tin-tuc" style="padding: 0 40px 0 10px; display: flex;  justify-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+
+                    <div style="border: 1px solid rgba(128, 128, 128, 0.5); width:350px;display:flex;">
+                        <div>
+                            <img src="~/images/khuyen-mai/km1.jpg" style="width:347px;height:200px;margin:1px 1px 1px 1px;" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="margin-top:10px;">
+                <div class="hang-tin-tuc" style="padding: 0 40px 0 10px; display: flex;  justify-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+
+                    <div style="border: 1px solid rgba(128, 128, 128, 0.5); width:350px;display:flex;">
+                        <div>
+                            <img src="~/images/khuyen-mai/km1.jpg" style="width:347px;height:200px;margin:1px 1px 1px 1px;" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</body>

@@ -1,0 +1,182 @@
+﻿@using web_ban_dien_thoai.Models;
+@model List<MatHangMua>
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    KhachHang khach = Session["TaiKhoan"] as KhachHang;
+}
+<style>
+    body {
+        margin: 10px 10px 10px 10px;
+    }
+
+    button {
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+    }
+
+        button:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    /*nút quay lại đầu trang*/
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+    .carousel-indicators {
+        position: static;
+    }
+
+        .carousel-indicators li {
+            width: 300px;
+            height: 100%;
+            opacity: 0.8;
+        }
+</style>
+<body>
+
+    <h2 style="text-align:center">Thông tin đơn hàng</h2>
+    <table class="table table-bordered" style="margin-left: 150px; margin-right: 150px; width: 1200px;">
+        <thead>
+            <tr>
+                <th><b>Tên điện thoại</b></th>
+                <th><b>Ảnh</b></th>
+                <th><b>Số lượng</b></th>
+                <th><b>Đơn giá</b></th>
+                <th><b>Thành tiền</b></th>
+                <th><b>Ghi chú</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dt in Model)
+            {
+                <tr>
+                    <td>@dt.TenDT</td>
+                    <td><img src="~/images/san-pham/@dt.HinhAnh" style="width: 90px;" /></td>
+                    @using (Html.BeginForm("CapNhatMatHang", "GioHang", new { MaSP = dt.MaDT }))
+                    {
+                        <td>
+                            @dt.SoLuong
+                        </td>
+                    }
+
+                    <td>@dt.GiaCuoi $</td>
+                    <td>@dt.ThanhTien() $</td>
+                    <td>
+                        <a href="#">[thêm ghi chú]</a>
+                    </td>
+
+
+                </tr>
+            }
+            <tr style="font-weight:bold; text-align:right; color:red;">
+                <td colspan="5"> </td>
+                <td colspan="1">Tổng tiền: @ViewBag.TongTien $</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 style="text-align:center">Thông tin khách hàng</h2>
+    <table class="table table-bordered" style="width:900px;margin-left:300px;">
+        <tr>
+            <td><b>Họ tên:</b> </td>
+            <td>@khach.HoTenKH</td>
+        </tr>
+        <tr>
+            <td><b>Địa chỉ giao hàng:</b> </td>
+            <td>@khach.DiachiKH</td>
+        </tr>
+        <tr>
+            <td><b>Điện thoại:</b> </td>
+            <td>@khach.DienthoaiKH</td>
+        </tr>
+        <tr>
+            <td><b>Ngày đặt:</b> </td>
+            <td>
+                @DateTime.Now.ToString("dd/MM/yyyy")
+            </td>
+        </tr>
+    </table>
+
+    <div class="PhuongThucThanhToan" style="display: flex; justify-content: space-between; justify-items: center; width: 450px; flex-wrap: wrap; margin-left: 475px;">
+        <!-- Ở đây, bạn sẽ có sự lựa chọn phương thức thanh toán, có lẽ là nút radio hoặc phần tử select -->
+        <div>
+            <input type="radio" name="paymentMethod" id="codMethod" value="COD"> Thanh toán nhận hàng <img style="width:50px;" src="~/images/cod.png" />
+        </div>
+        @*<div>
+            <input type="radio" name="paymentMethod" id="zlpMethod" value="ZL"> Thanh toán ZaloPay<img style="width:50px;" src="~/images/zlp.jpg" />
+        </div>*@
+        <div>
+            <input type="radio" name="paymentMethod" id="mmMethod" value="MM"> Thanh toán PayPal<img style="width:50px;" src="~/images/pp.png" />
+        </div>
+        @*<div>
+            <input type="radio" name="paymentMethod" id="vnpMethod" value="VNPay"> Thanh toán VNPAY<img style="width:50px;" src="~/images/vnp.jpg" />
+        </div>*@
+
+    </div>
+
+
+
+    @*<button class="btn btn-primary" style="margin-left:645px;color:white;" id="datHangButton">
+            @Html.ActionLink("Đặt hàng", "DongYDatHang", null, new { @class = "btn btn-primary" })
+        </button>*@
+
+
+    <div style="margin-top:25px;">
+        <button class="btn btn-primary" style="margin-left: 645px; color: white;" id="datHangButton" onclick="placeOrder()">
+            Đặt hàng
+        </button>
+    </div>
+
+
+    <script>
+    function placeOrder() {
+        var selectedPaymentMethod = $('input[name="paymentMethod"]:checked').val();
+
+        if (selectedPaymentMethod === 'COD') {
+            // Xử lý khi phương thức thanh toán là COD
+            // Ví dụ: Chuyển hướng đến trang xác nhận đặt hàng COD
+            window.location.href = '@Url.Action("DongYDatHang")';
+        }
+        else if (selectedPaymentMethod === 'VNPay') {
+            // Xử lý khi phương thức thanh toán là VNPay
+            // Ví dụ: Chuyển hướng đến trang VNPay
+            window.location.href = 'https://sandbox.vnpayment.vn/tryitnow/Home/CreateOrder'; // Điều này sẽ chuyển hướng đến trang VNPay sandbox, bạn có thể thay đổi URL thực tế tại đây
+        }
+        else if (selectedPaymentMethod === 'ZL') {
+            // Xử lý khi phương thức thanh toán là ZaloPay
+            // Thêm mã JavaScript tại đây để xử lý ZaloPay
+        }
+        else if (selectedPaymentMethod === 'MM') {
+            // Xử lý khi phương thức thanh toán là Momo
+            window.location.href = '@Url.Action("PaymentWithPayPal")';
+        }
+    }
+    </script>
+
+
+
+
+
+    </br>
+    </br>
+    </br>
+
+</body>

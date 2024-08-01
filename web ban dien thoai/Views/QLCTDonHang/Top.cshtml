@@ -1,0 +1,25 @@
+﻿
+@{
+    
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Lượng Bán";
+}
+
+<h2>Lượng Bán</h2>
+
+<table class="table">
+    <tr>
+        <th>Mã Đơn Đặt Hàng</th>
+        <th>Tổng Số Lượng Bán</th>
+    </tr>
+    @foreach (var item in ViewBag.LuongBan)
+    {
+        <tr>
+            <td>@item.MaDT</td>
+            <td>@item.TongSoLuongBan</td>
+        </tr>
+    }
+</table>

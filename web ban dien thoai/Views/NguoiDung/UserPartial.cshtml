@@ -1,0 +1,29 @@
+﻿@using web_ban_dien_thoai.Models;
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+
+}
+
+@if (kh == null)
+{
+    <li>
+        <a href="~/NguoiDung/DangNhap"> Đăng nhập </a>
+    </li>
+    <li>
+        <a href="~/NguoiDung/DangKy"> Đăng ký </a>
+    </li>
+}
+@if (kh != null)
+{
+
+    <a style="font-size:14px;">hi @kh.HoTenKH ! </a>
+    <li>
+        <a href="~/NguoiDung/Index">Thông tin</a>
+    </li>
+    <li>
+        <a href="~/GioHang/XemDonHang">Hóa đơn</a>
+    </li>
+    <li>
+        <a href="@Url.Action("DangXuat","NguoiDung")">Đăng xuất </a>
+    </li>
+}

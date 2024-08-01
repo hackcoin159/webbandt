@@ -1,0 +1,128 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    body {
+        margin: 10px;
+        padding: 0;
+        background-color: #b3c3be38;
+    }
+
+    .card-login {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 40%;
+        max-width: 400px; /* Giới hạn chiều rộng tối đa của thẻ */
+        margin: 100px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+        .card-login h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #008CBA; /* Thiết lập màu cho tiêu đề */
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #008CBA;
+        border-radius: 33px;
+        font-size: 18px;
+        background-color: #008CBA;
+        color: white;
+        cursor: pointer;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #00567a;
+        }
+
+    /* Nút quay lại đầu trang */
+    .dau-trang {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        border: 2px solid #008CBA;
+        background-color: #008CBA;
+        color: white;
+        cursor: pointer;
+    }
+
+        .dau-trang:hover {
+            background-color: #00567a;
+        }
+
+    /* Tùy chỉnh thêm cho phần body */
+    .khoang-cach-body-footer {
+        margin-bottom: 150px; /* Điều chỉnh theo yêu cầu để tạo khoảng cách giữa form và footer */
+    }
+</style>
+
+<body>
+    <div class="card-login">
+        <h2>ĐĂNG NHẬP</h2>
+
+        @using (Html.BeginForm("DangNhap", "Admin"))
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <label for="dangnhap">TÊN ĐĂNG NHẬP:</label>
+                @Html.TextBox("TenDN", null, new
+                {
+                    @class = "form-control",
+                    @id = "dangnhap",
+                    required = "required"
+                })
+            </div>
+            <div class="form-group">
+                <label for="matkhau">MẬT KHẨU:</label>
+                @Html.Password("Matkhau", null, new
+                {
+                    @class = "form-control",
+                    @id = "matkhau",
+                    required = "required"
+                })
+            </div>
+
+            <button type="submit">ĐĂNG NHẬP</button>
+        }
+    </div>
+
+    <!-- Nút quay lại đầu trang -->
+    <button class="dau-trang" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">&#8593;</button>
+
+    <div class="khoang-cach-body-footer">
+        <br />
+        <br />
+        <br />
+    </div>
+</body>

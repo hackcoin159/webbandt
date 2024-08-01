@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "TrangQuanLy";
+    Layout = "~/Views/Admin/_ADLayout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManagerWebsite</title>
+
+
+</head>
+<style>
+    body {
+        font-size: 70%; /* Thu nhỏ cỡ chữ toàn trang */
+        width: 99%; /* Thu nhỏ chiều rộng toàn trang */
+    }
+
+    .container {
+        display: flex; /* Sử dụng Flexbox để căn chỉnh các div ngang nhau */
+    }
+
+    body ul div a {
+        text-decoration: none;
+    }
+    /* Thiết lập cơ bản cho menu dọc */
+    .vertical-menu {
+        width: 223px; /* Độ rộng của menu */
+        height: 100vh;
+        background-color: #f2f2f2; /* Màu nền của menu */
+        overflow-y: auto;
+    }
+
+        /* Các liên kết trong menu */
+        .vertical-menu a {
+            background-color: #f2f2f2; /* Màu nền */
+            color: #333; /* Màu chữ */
+            display: block;
+            padding-bottom: 5px;
+            text-decoration: none;
+        }
+
+        .vertical-menu div {
+            background-color: #f2f2f2; /* Màu nền */
+            display: block;
+            padding-bottom: 5px;
+            text-decoration: none;
+        }
+
+        /* Hiệu ứng khi rê chuột qua liên kết */
+        .vertical-menu a:hover {
+            background-color: #ddd; /* Màu nền khi rê chuột qua */
+        }
+
+        /* Hiệu ứng khi liên kết được chọn */
+        .vertical-menu a.active {
+            background-color: #007bff; /* Màu nền khi liên kết được chọn */
+            color: #fff; /* Màu chữ khi liên kết được chọn */
+        }
+</style>
+<body>
+</body>
+</html>
+
